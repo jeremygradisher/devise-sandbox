@@ -11,6 +11,58 @@ You need to make an account to see anything...
 
 # Saving Images
 ## In Production you need an AWS S3 bucket, an IAM user and a policy for permissions and the connection.
+Here is an example:
+```
+1. grabbing the s3bucket and user from aws:
+    1) Create IAM user and grab the keys:
+
+    user: username
+    Access Key ID:
+    xxxxxxxxxxxxxxgfxgfx
+    Secret Access Key:
+    xxxfxhxhfxhfxhfxhfxhfxfxhfxhf
+
+    2) Create S3 bucket
+      Under services hit S3
+      Push Create bucket - name the bucket and select the region
+      *make note of the region:
+
+    3) Go back to services and click IAM hit users in the left nav and click into the user
+
+    4) hit policies in the left click get started (if necessary) 
+
+    5) click create policy
+
+    6) Copy an AWS Managed Policy select
+
+    7) search AdministratorAccess and select
+
+
+    8) Attach policy to IAM user created
+    Here is a sample policy, replace the code with your s3 bucket name as needed below:
+    {
+    "Version": "2012-10-17",
+    "Statement": [
+    {
+                "Effect": "Allow",
+                "Action": "s3:*",
+                "Resource": [
+                "arn:aws:s3:::bucketname",
+                "arn:aws:s3:::bucketname/*"
+                ]
+    },
+    {
+    "Effect": "Allow",
+    "Action": "s3:ListAllMyBuckets",
+    "Resource": "arn:aws:s3:::*"
+    }
+    ]
+    }
+
+    9) click create policy
+
+    10) go to users and attach the policy under permissions attach policy
+```
 
 ## Gems for uploads
 Using a few gems here carrierwave to upload, mini_magick for any processing of images, fog-aws to save in an S3 bucket
