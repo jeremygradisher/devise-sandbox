@@ -1,20 +1,81 @@
 # Devise Sandbox
 
 Just setting this up quick for fun and to test a few options.<br>
+I'll also point out a few pieces of important code in case anyone is looking for something.<br>
 Basic Ruby on Rails application with a User Model, Devise for user authentication and S3 bucket to store UserAvatar images.<br>
 It uses Sendgrid to email on account verification and password resets.
 
-In Production create an AWS S3 bucket, an IAM user and a policy for permissions and the connection.
+Check it out if you would like:<br>
+<a href="https://devise-sandbox.herokuapp.com" target="_blank">https://devise-sandbox.herokuapp.com</a><br>
+You need to make an account to see anything...
 
-Save what you need in the ENV
+# Saving Images
+## In Production you need an AWS S3 bucket, an IAM user and a policy for permissions and the connection.
+
+## Gems for uploads
+Using a few gems here carrierwave to upload, mini_magick for any processing of images, fog-aws to save in an S3 bucket
+```
+#for image uploading
+gem 'carrierwave', '~> 2.0'
+gem 'mini_magick', '4.9.5'
+gem 'fog-aws'
+```
+
+## In the uploader you need
+```
+# Choose what kind of storage to use for this uploader:
+if Rails.env.production?
+  storage :fog
+else
+  storage :file
+end
+
+# and whitelist file types
+def extension_whitelist
+ %w(jpg jpeg gif png)
+end
+```
+
+## get what you need saving to the ENV for heroku/production
+```
+if Rails.env.production?
+  CarrierWave.configure do |config|
+    config.fog_credentials = {
+      # Configuration for Amazon S3
+      :provider              => 'AWS',
+      :aws_access_key_id     => ENV['S3_ACCESS_KEY'],
+      :aws_secret_access_key => ENV['S3_SECRET_KEY'],
+    }
+    config.fog_directory     =  ENV['S3_BUCKET']
+  end
+end
+```
+
+## model user.rb
+```
+#has many of the image, dependent destroy
+has_many :user_avatars, dependent: :destroy
+#Allow it to be uploaded on the user form
+accepts_nested_attributes_for :user_avatars
+```
+
+## model user_avatar.rb
+```
+mount_uploader :avatar, AvatarUploader
+belongs_to :user
+validates_size_of :avatar, maximum: 1.megabytes, message: "Upload should be less than 1MB"
+```
+
+## Save what you need in the ENV
 ```
 $ heroku config:set S3_BUCKET=xxxxxxxxxxxxxxx -a devise-sandbox
 $ heroku config:set S3_ACCESS_KEY=xxxxxxxxxxxxxxx -a devise-sandbox
 $ heroku config:set S3_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -a devise-sandbox
+
+#you will also need SENDGRID_PASSWORD and SENDGRID_USERNAME for sendgrid, 
+#those can be set-up through the heroku console
 ```
-Check it out if you would like:<br>
-<a href="https://devise-sandbox.herokuapp.com" target="_blank">https://devise-sandbox.herokuapp.com</a><br>
-You need to make an account to see anything...
+
 
 ...and now we build.
 
