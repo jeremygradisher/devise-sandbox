@@ -1,6 +1,6 @@
 # Devise Sandbox
 
-## THis is a good base build - user auth/user model, save image to aws, sendgrid sign up
+## Good base build - user auth w/ user model, save image to aws, sendgrid sign-up
 Just setting this up quick for fun and to test a few options.<br>
 I'll also point out a few pieces of important code in case anyone is looking for something.<br>
 Basic Ruby on Rails application with a User Model, Devise for user authentication and S3 bucket to store UserAvatar images.<br>
