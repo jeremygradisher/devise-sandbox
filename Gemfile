@@ -37,7 +37,7 @@ gem 'twitter-bootstrap-rails'
 gem 'devise-bootstrap-views'
 
 #for image uploading
-gem 'carrierwave', '~> 2.0'
+gem 'carrierwave', '~> 2.1'
 gem 'mini_magick', '4.9.5'
 gem 'fog-aws'
 
