@@ -9,7 +9,7 @@
       <div class="panel panel-default member-panels" style="/*border-color:#210f5b;*/">
         <div class="panel-heading project-panel-heading" style="padding:0;">
           <% if @user.user_avatars.exists? %>
-            <%= image_tag(@user.user_avatars.first.avatar, :style => "width:100%;") %>
+            <%= image_tag(@user.user_avatars.first.avatar_url, :style => "width:100%;") %>
           <% else %><%= image_tag('/images/NO-IMAGE-AVAILABLE.jpg', :style => "width:100%;") %>
           <% end %>
         </div>
