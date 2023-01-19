@@ -23,7 +23,7 @@
         <td><%= link_to user.id, user_path(user) %></td>
         <td>
           <% if user.user_avatars.any? %>
-          <%= link_to image_tag(user.user_avatars.first.avatar, 
+          <%= link_to image_tag(user.user_avatars.first.avatar_url, 
                 :style => 'max-width:50px;max-height:50px;padding:2px;'), user_path(user) %>
           <% else %>
           <%= link_to image_tag('/images/NO-IMAGE-AVAILABLE.jpg',

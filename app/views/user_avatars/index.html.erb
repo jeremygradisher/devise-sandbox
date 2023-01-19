@@ -16,7 +16,7 @@
     <% @user_avatars.each do |user_avatar| %>
       <tr>
         <td><%= user_avatar.id %></td>
-        <td><%= link_to image_tag(user_avatar.avatar, :style => 'max-width:50px;max-height:50px;padding:2px;', :class => ''), user_avatar %></td>
+        <td><%= link_to image_tag(user_avatar.avatar_url, :style => 'max-width:50px;max-height:50px;padding:2px;', :class => ''), user_avatar %></td>
         
         <td><%= link_to 'Show', user_avatar, :class => 'btn btn-default' %>
         
