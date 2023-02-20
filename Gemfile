@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 7.0.4'
+gem 'rails', '~> 7.0', '>= 7.0.4.2'
 ruby '3.1.3'
 # Use sqlite3 as the database for Active Record
 gem 'devise'
